@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: crud-container
-          image: charlesmendes13/crud
+          image: charlesmendes13/crud-amd64
           ports:
             - containerPort: 80
