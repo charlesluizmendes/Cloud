@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: crud-pod
+spec:
+  containers:
+  - name: crud-container
+    image: charlesmendes13/crud
+    ports:
+      - containerPort: 80
