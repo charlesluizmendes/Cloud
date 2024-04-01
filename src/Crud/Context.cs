@@ -16,5 +16,13 @@ namespace Crud
         {
             base.OnModelCreating(modelBuilder);
         }
+
+        public static void MigrationInitialisation(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                serviceScope.ServiceProvider.GetService<Context>().Database.Migrate();
+            }
+        }
     }
 }

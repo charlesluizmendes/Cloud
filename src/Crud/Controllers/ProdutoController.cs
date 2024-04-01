@@ -53,7 +53,6 @@ namespace Crud.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome,Preco,Descricao")] Produto produto)
         {
             if (ModelState.IsValid)
@@ -85,7 +84,6 @@ namespace Crud.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Preco,Descricao")] Produto produto)
         {
             if (id != produto.Id)
@@ -136,7 +134,6 @@ namespace Crud.Controllers
 
         // POST: Produto/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Produto == null)

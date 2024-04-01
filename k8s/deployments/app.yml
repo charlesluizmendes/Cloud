@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: crud-deployment
+  labels:
+    app: crud-app
 spec:  
   replicas: 4
   selector:
@@ -15,5 +17,22 @@ spec:
       containers:
         - name: crud-container
           image: charlesmendes13/crud
+          env:
+            - name: SERVER
+              value: "sql-service"
+            - name: PORT
+              value: "1433"
+            - name: DATABASE
+              value: "crud"
+            - name: USER
+              value: "SA"
+            - name: PASSWORD
+              value: "Str0ngPa$$w0rd"
           ports:
             - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10

@@ -25,11 +25,17 @@ builder.Services.AddDbContext<Context>(o =>
      o.UseSqlServer(connectionString)
 );
 
+// HealthCheck
+builder.Services.AddHealthChecks().AddSqlServer(connectionString);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
+    // Migration
+    Context.MigrationInitialisation(app);
+
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
@@ -41,6 +47,11 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHealthChecks("/health");
+});
 
 app.MapControllerRoute(
     name: "default",

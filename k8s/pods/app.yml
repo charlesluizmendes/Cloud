@@ -8,3 +8,14 @@ spec:
     image: charlesmendes13/crud
     ports:
       - containerPort: 80
+    env:
+      - name: SERVER
+        value: "sql-service"
+      - name: PORT
+        value: "1433"
+      - name: DATABASE
+        value: "crud"
+      - name: USER
+        value: "SA"
+      - name: PASSWORD
+        value: "Str0ngPa$$w0rd"

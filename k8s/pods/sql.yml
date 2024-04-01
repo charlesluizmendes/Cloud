@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sql-pod
+spec:
+  containers:
+  - name: sql-container
+    image: mcr.microsoft.com/azure-sql-edge
+    env:
+      - name: ACCEPT_EULA
+        value: "Y"
+      - name: SA_PASSWORD
+        value: "Str0ngPa$$w0rd"
+    ports:
+      - containerPort: 1433
