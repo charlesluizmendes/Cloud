@@ -18,13 +18,33 @@ docker run --name sqlserver -e 'ACCEPT_EULA=Y' -e "SA_PASSWORD=Str0ngPa$$w0rd" -
 ou para processadores ARM64:
 
 ```
-docker run --name azuresqledge --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Str0ngPa$$w0rd' -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge
+docker run --name sqlserver --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Str0ngPa$$w0rd' -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge
 ```
 
 Agora crie o container do projeto "crud"
 
 ```
-docker run --name crud -e 'SERVER=172.17.0.2' -e 'PORT=1433' -e 'DATABASE=crud' -e 'USER=SA' -e 'PASSWORD=Str0ngPa$$w0rd' -p 5001:80 -d charlesmendes13/crud
+docker run --name crud -e 'SERVER=<ip do container sqlserver>' -e 'PORT=1433' -e 'DATABASE=crud' -e 'USER=SA' -e 'PASSWORD=Str0ngPa$$w0rd' -p 5001:80 -d charlesmendes13/crud
+```
+
+Em seguida podemos executar o Prometheus para criar um banco de metricas, baseado no arquivo 'prometheus.yml':
+
+```
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "crud"
+    metrics_path: "/metrics"
+    scrape_interval: 3s
+    static_configs:
+    - targets: ["<ip do container Crud>:80"]
+```
+
+```
+docker volume create prometheus-data
+docker run -p 9090:9090 -v /path/to/file/prometheus.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus -d prom/prometheus
 ```
 
 ## Testes
