@@ -24,7 +24,7 @@ docker run --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Str0ngP
 Agora crie o container do projeto "crud"
 
 ```
-docker run --name crud -e "SERVER=<ip do sql server>" -e "PORT=1433" -e "DATABASE=crud" -e "USER=SA" -e "PASSWORD=Str0ngPa$$w0rd" -p 5000:80 -d charlesmendes13/crud
+docker run --name crud -e "SERVER=localhost" -e "PORT=1433" -e "DATABASE=crud" -e "USER=SA" -e "PASSWORD=Str0ngPa$$w0rd" -p 5001:80 -d charlesmendes13/crud
 ```
 
 ## Testes
