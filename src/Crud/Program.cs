@@ -1,6 +1,7 @@
 using Crud;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,22 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+// Prometheus
+
+var counter = Metrics.CreateCounter("webapimetric", "Counts requests to the WebApiMetrics API endpoints",
+    new CounterConfiguration
+    {
+        LabelNames = new[] { "method", "endpoint" }
+    });
+
+app.Use((context, next) =>
+{
+    counter.WithLabels(context.Request.Method, context.Request.Path).Inc();
+    return next();
+});
+
+app.UseMetricServer();
+app.UseHttpMetrics();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
