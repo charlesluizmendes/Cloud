@@ -18,13 +18,13 @@ docker run --name sqlserver -e 'ACCEPT_EULA=Y' -e "SA_PASSWORD=Str0ngPa$$w0rd" -
 ou para processadores ARM64:
 
 ```
-docker run --name azuresqledge  --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Str0ngPa$$w0rd' -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge
+docker run --name azuresqledge --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Str0ngPa$$w0rd' -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge
 ```
 
 Agora crie o container do projeto "crud"
 
 ```
-docker run --name crud -e "SERVER=localhost" -e "PORT=1433" -e "DATABASE=crud" -e "USER=SA" -e "PASSWORD=Str0ngPa$$w0rd" -p 5001:80 -d charlesmendes13/crud
+docker run --name crud -e 'SERVER=172.17.0.2' -e 'PORT=1433' -e 'DATABASE=crud' -e 'USER=SA' -e 'PASSWORD=Str0ngPa$$w0rd' -p 5001:80 -d charlesmendes13/crud
 ```
 
 ## Testes
