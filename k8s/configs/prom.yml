@@ -12,5 +12,15 @@ data:
       - job_name: "crud"
         metrics_path: "/metrics"
         scrape_interval: 3s
-        static_configs:
-        - targets: ["crud-service:80"]
+        kubernetes_sd_configs:
+        - role: endpoints
+          namespaces:
+            names:
+            - default
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_service_name]
+          action: replace
+          target_label: job
+        - source_labels: [__meta_kubernetes_pod_container_port_number]
+          regex: '80'
+          action: keep
