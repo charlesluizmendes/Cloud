@@ -24,7 +24,7 @@ Agora crie o container do projeto "crud"
 ```
 docker run --name crud -e 'SERVER=<ip do container sqlserver>' -e 'PORT=1433' -e 'DATABASE=crud' -e 'USER=SA' -e 'PASSWORD=Str0ngPa$$w0rd' -p 5001:80 -d charlesmendes13/crud
 ```
-<sup>* Altere o '<ip do container sqlserver>' executando o comando docker inspect <id do container></sup>
+<sup>* Altere o "ip do container sqlserver" executando o comando docker inspect <id do container></sup>
 
 Em seguida podemos executar o Prometheus para criar um banco de metricas, baseado no arquivo 'prometheus.yml':
 
@@ -40,7 +40,7 @@ scrape_configs:
     static_configs:
     - targets: ["<ip do container Crud>:80"]
 ```
-<sup>* Altere o '<ip do container Crud>' executando o comando docker inspect <id do container></sup>
+<sup>* Altere o "ip do container Crud" executando o comando docker inspect <id do container></sup>
 
 ```
 docker volume create prometheus-data
