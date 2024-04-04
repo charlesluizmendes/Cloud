@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: graf-pod
+spec:
+  containers:
+  - name: graf-container
+    image: grafana/grafana
+    ports:
+    - containerPort: 3000
