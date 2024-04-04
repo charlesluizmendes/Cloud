@@ -47,6 +47,13 @@ docker volume create prometheus-data
 docker run -p 9090:9090 -v /path/to/file/prometheus.yml:/etc/prometheus/prometheus.yml -v prometheus-data:/prometheus -d prom/prometheus
 ```
 
+Agora vamos criar o Dashboard com o Grafana:
+
+```
+docker volume create grafana-data
+docker run -d -v grafana-data:/var/lib/grafana -p 3000:3000 grafana/grafana
+```
+
 ## Testes
 
 Agora acesse o sistema no endereço http://localhost:5001 e realize as operações de CRUD dos Produtos.
