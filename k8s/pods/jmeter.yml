@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jmeter-pod
+spec:
+  containers:
+    - name: jmeter-container
+      image: egaillardon/jmeter
+      command: ["sleep", "infinity"]  
+
+# kubectl cp crud.jmx jmeter-pod:/jmeter/crud.jmx
+# kubectl exec -it jmeter-pod -- jmeter -n -t crud.jmx -l /jmeter/crud-results.csv -e -o /jmeter/results
+# kubectl cp default/jmeter-pod:/jmeter/results .
