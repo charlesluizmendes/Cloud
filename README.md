@@ -54,6 +54,10 @@ docker volume create grafana-data
 docker run -d -v grafana-data:/var/lib/grafana -p 3000:3000 grafana/grafana
 ```
 
-## Testes
+## Testes de Carga
 
-Agora acesse o sistema no endereço http://localhost:5001 e realize as operações de CRUD dos Produtos.
+Para executar os Testes de Carga, utilizaremos o JMeter como ferramenta para tal. Primeiramente vamos baixar esse arquivo [jmx](https://github.com/charlesmendes13/Kubernetes/blob/master/k8s/crud.jmx). Feito isso vamos executar o JMeter no diretório onde o arquivo voi baixado.
+
+```
+jmeter -n -t crud.jmx -l crud-results.csv -e -o results/
+```
