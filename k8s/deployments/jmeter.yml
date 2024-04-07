@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jmeter-deployment
+  labels:
+    app: jmeter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jmeter
+  template:
+    metadata:
+      labels:
+        app: jmeter
+    spec:
+      containers:
+        - name: jmeter-container
+          image: egaillardon/jmeter
+          command: ["sleep", "infinity"]  
+
+# kubectl cp crud.jmx jmeter-pod:/jmeter/crud.jmx
+# kubectl exec -it jmeter-pod -- jmeter -n -t crud.jmx -l /jmeter/crud-results.csv -e -o /jmeter/results
+# kubectl cp default/jmeter-pod:/jmeter/results .
