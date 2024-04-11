@@ -1,7 +1,7 @@
 pipeline {
-    agent any
-    environment {
-        dotnet = 'C:\\Program Files\\dotnet\\dotnet.exe'
+    agent any    
+    tools {
+        dotnetsdk 'dotnet'
     }
     stages {
         stage('Clear') {
@@ -10,8 +10,7 @@ pipeline {
             }
         }
         stage('Checkout') {
-            steps {
-                // Clonar o repositório
+            steps {                
                 git 'https://github.com/charlesmendes13/Kubernetes.git'
             }
         }
@@ -21,16 +20,15 @@ pipeline {
             }
         }
         stage('Build') {
-            steps {
-                // Build the .NET Core project
+            steps {                
                 bat "dotnet build ./Crud.sln --configuration Release"
             }
         }
         stage('Docker Build') {
             steps {
                 script {
-                    def assemblyPath = "${env.WORKSPACE}\\src\\Crud\\bin\\Release\\net6.0\\Crud.dll"
-                    def version = powershell(returnStdout: true, script: "([System.Diagnostics.FileVersionInfo]::GetVersionInfo(\"${assemblyPath}\")).FileVersion").trim()
+                    def path = "${env.WORKSPACE}\\src\\Crud\\bin\\Release\\net6.0\\Crud.dll"
+                    def version = powershell(returnStdout: true, script: "([System.Diagnostics.FileVersionInfo]::GetVersionInfo(\"${path}\")).FileVersion").trim()
                     dir('src/Crud') {
                         bat "docker build -t charlesmendes13/crud:$version -f Dockerfile ."
                     }
