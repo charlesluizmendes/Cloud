@@ -20,11 +20,11 @@ spec:
           command: ["sleep", "infinity"]
           volumeMounts:
             - name: jmeter-config
-              mountPath: /path/to/jmeter/scripts
+              mountPath: /jmeter/scripts
       volumes:
         - name: jmeter-config
           configMap:
             name: jmeter-config
 
 # kubectl get pods
-# kubectl exec -it <pod name> -- jmeter -n -t /path/to/jmeter/scripts/crud.jmx
+# kubectl exec -it <pod name> -- jmeter -n -t /jmeter/scripts/crud.jmx
