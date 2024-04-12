@@ -17,8 +17,14 @@ spec:
       containers:
         - name: jmeter-container
           image: egaillardon/jmeter
-          command: ["sleep", "infinity"]  
+          command: ["sleep", "infinity"]
+          volumeMounts:
+            - name: jmeter-config
+              mountPath: /path/to/jmeter/scripts
+      volumes:
+        - name: jmeter-config
+          configMap:
+            name: jmeter-config
 
-# kubectl cp crud.jmx jmeter-pod:/jmeter/crud.jmx
-# kubectl exec -it jmeter-pod -- jmeter -n -t crud.jmx -l /jmeter/crud-results.csv -e -o /jmeter/results
-# kubectl cp default/jmeter-pod:/jmeter/results .
+# kubectl get pods
+# kubectl exec -it <pod name> -- jmeter -n -t /path/to/jmeter/scripts/crud.jmx
