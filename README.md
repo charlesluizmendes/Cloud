@@ -68,27 +68,27 @@ Agora vamos iniciar o dashboard do Kubernetes com o comando:
 minikube dashboard
 ```
 
-Feito isso agora podemos utilizar os arquivos de manifesto para criar os objetos do Kubernetes, baixando os arquivos contidos nesse [repositório](https://github.com/charlesmendes13/Kubernetes/tree/master/k8s) e executando os comandos abaixo:
+Feito isso agora podemos utilizar os arquivos de manifesto para criar os objetos do Kubernetes, baixando os arquivos contidos nesse [repositório](https://github.com/charlesmendes13/Cloud/tree/master/k8s) e executando os comandos abaixo:
 
-- ConfigMaps [configs](https://github.com/charlesmendes13/Kubernetes/tree/master/k8s/configs):
+- ConfigMaps [configs](https://github.com/charlesmendes13/Cloud/tree/master/k8s/configs):
 ```
 kubectl apply -f jmeter.yml
 kubectl apply -f prom.yml
 ```
 
-- Roles [roles](https://github.com/charlesmendes13/Kubernetes/tree/master/k8s/roles):
+- Roles [roles](https://github.com/charlesmendes13/Cloud/tree/master/k8s/roles):
 ```
 kubectl apply -f prom.yml
 ```
 
-- Volumes [volumes](https://github.com/charlesmendes13/Kubernetes/tree/master/k8s/volumes):
+- Volumes [volumes](https://github.com/charlesmendes13/Cloud/tree/master/k8s/volumes):
 ```
 kubectl apply -f graf.yml
 kubectl apply -f prom.yml
 kubectl apply -f sql.yml
 ```
 
-- Services [services](https://github.com/charlesmendes13/Kubernetes/tree/master/k8s/services):
+- Services [services](https://github.com/charlesmendes13/Cloud/tree/master/k8s/services):
 ```
 kubectl apply -f app.yml
 kubectl apply -f graf.yml
@@ -96,7 +96,7 @@ kubectl apply -f prom.yml
 kubectl apply -f sql.yml
 ```
 
-- Deployments [deployments](https://github.com/charlesmendes13/Kubernetes/tree/master/k8s/deployments):
+- Deployments [deployments](https://github.com/charlesmendes13/Cloud/tree/master/k8s/deployments):
 ```
 kubectl apply -f app.yml
 kubectl apply -f graf.yml
@@ -116,7 +116,7 @@ Com isso podemos acessar a aplicação e utilizar todas as funcionalidades e ace
 
 ## JMeter
 
-Para executar os Testes de Carga, utilizaremos o JMeter como ferramenta para tal. Primeiramente vamos baixar esse arquivo [jmx](https://github.com/charlesmendes13/Kubernetes/blob/master/jmeter/crud.jmx). Feito isso vamos executar o JMeter no diretório onde o arquivo voi baixado.
+Para executar os Testes de Carga, utilizaremos o JMeter como ferramenta para tal. Primeiramente vamos baixar esse arquivo [jmx](https://github.com/charlesmendes13/Cloud/blob/master/jmeter/crud.jmx). Feito isso vamos executar o JMeter no diretório onde o arquivo voi baixado.
 
 ```
 jmeter -n -t crud.jmx -l crud-results.csv -e -o results/
@@ -132,4 +132,4 @@ Agora vamos criar uma pipeline para compilação do projeto no Jenkins. Primeira
 java -jar jenkins.war --httpPort=9090
 ```
 
-Feito isso, o jenkins irá ser instanciado, instale todos os plugins sugeridos e aguardade a finalização dos mesmos. Agora e so acessar o Jenkis no endereço http://localhost:9090 e criar a pipeline com as configurações do [arquivo](https://github.com/charlesmendes13/Kubernetes/blob/master/jenkins/pipeline.jenkinsfile). Após isso e somente executar a pipeline e o projeto Crud será compilado.
+Feito isso, o jenkins irá ser instanciado, instale todos os plugins sugeridos e aguardade a finalização dos mesmos. Agora e so acessar o Jenkis no endereço http://localhost:9090 e criar a pipeline com as configurações do [arquivo](https://github.com/charlesmendes13/Cloud/blob/master/jenkins/pipeline.jenkinsfile). Após isso e somente executar a pipeline e o projeto Crud será compilado.
