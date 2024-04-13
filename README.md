@@ -54,6 +54,66 @@ docker volume create grafana-data
 docker run -d -v grafana-data:/var/lib/grafana -p 3000:3000 grafana/grafana
 ```
 
+### Kubernetes
+
+Primeiramente devemos instalar o Minikube atraves do link [minikube](https://minikube.sigs.k8s.io/docs/start/). Feito isso agora vamos iniciar o node com o comando;
+
+```
+minikube start
+```
+
+Agora vamos iniciar o dashboard do Kubernetes com o comando:
+
+```
+minikube dashboard
+```
+
+Feito isso agora podemos utilizar os arquivos de manifesto para criar os objetos do Kubernetes, baixando os arquivos contidos nesse [repositório](https://github.com/charlesmendes13/Kubernetes/tree/master/k8s) e executando os comandos abaixo:
+
+- ConfigMaps [configs](https://github.com/charlesmendes13/Kubernetes/tree/master/k8s/configs):
+```
+kubectl apply -f jmeter.yml
+kubectl apply -f prom.yml
+```
+
+- Roles [roles](https://github.com/charlesmendes13/Kubernetes/tree/master/k8s/roles):
+```
+kubectl apply -f prom.yml
+```
+
+- Volumes [volumes](https://github.com/charlesmendes13/Kubernetes/tree/master/k8s/volumes):
+```
+kubectl apply -f graf.yml
+kubectl apply -f prom.yml
+kubectl apply -f sql.yml
+```
+
+- Services [services](https://github.com/charlesmendes13/Kubernetes/tree/master/k8s/services):
+```
+kubectl apply -f app.yml
+kubectl apply -f graf.yml
+kubectl apply -f prom.yml
+kubectl apply -f sql.yml
+```
+
+- Deployments [deployments](https://github.com/charlesmendes13/Kubernetes/tree/master/k8s/deployments):
+```
+kubectl apply -f app.yml
+kubectl apply -f graf.yml
+kubectl apply -f jmeter.yml
+kubectl apply -f prom.yml
+kubectl apply -f sql.yml
+```
+
+Criados todos os objetos no cluester agora podemos utilizar os comandos do minikube para criar a porta de acesso na nossa maquina local, utilizando os seguintes comandos:
+
+```
+minikube service crud-service
+minikube service graf-service
+```
+
+Com isso podemos acessar a aplicação e utilizar todas as funcionalidades e acessar o painel do Grafana para obter as metricas do sistema.
+
 ## JMeter
 
 Para executar os Testes de Carga, utilizaremos o JMeter como ferramenta para tal. Primeiramente vamos baixar esse arquivo [jmx](https://github.com/charlesmendes13/Kubernetes/blob/master/jmeter/crud.jmx). Feito isso vamos executar o JMeter no diretório onde o arquivo voi baixado.
@@ -61,6 +121,8 @@ Para executar os Testes de Carga, utilizaremos o JMeter como ferramenta para tal
 ```
 jmeter -n -t crud.jmx -l crud-results.csv -e -o results/
 ```
+
+Acessando o diretório onde foi executado o comando acima, podemos ir na pasta "results" e obter os resultados dos testes de carga. Também e possivel acessar o painel do Grafana e verificar os picos de utilização do sistema no momento da execução dos testes.
 
 ## Jenkins
 
