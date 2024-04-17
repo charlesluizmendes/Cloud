@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: graf-service
 spec:
-  selector:
-    app: graf
-  ports:
-    - protocol: TCP
-      port: 3000
-      targetPort: 3000
   type: NodePort
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30001
+  selector:
+    app: graf  
