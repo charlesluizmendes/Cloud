@@ -12,17 +12,17 @@ Acesse o link abaixo para baixar as seguintes imagens do docker:
 Em seguida execute o seguinte comando para criar um container do SQL Server:
 
 ```
-docker run --name sqlserver -e 'ACCEPT_EULA=Y' -e "SA_PASSWORD=Str0ngPa$$w0rd" -p 1433:1433 -d mcr.microsoft.com/mssql/server
+docker run --name sqlserver -e 'ACCEPT_EULA=Y' -e "SA_PASSWORD=Str0ngPassw0rd123!" -p 1433:1433 -d mcr.microsoft.com/mssql/server
 ```
 <sup>ou para processadores ARM64:</sup>
 ```
-docker run --name sqlserver --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Str0ngPa$$w0rd' -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge
+docker run --name sqlserver --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Str0ngPassw0rd123!' -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge
 ```
 
 Agora crie o container do projeto "crud":
 
 ```
-docker run --name crud -e 'SERVER=<ip do container sqlserver>' -e 'PORT=1433' -e 'DATABASE=crud' -e 'USER=SA' -e 'PASSWORD=Str0ngPa$$w0rd' -p 5001:80 -d charlesmendes13/crud
+docker run --name crud -e 'SERVER=<ip do container sqlserver>' -e 'PORT=1433' -e 'DATABASE=crud' -e 'USER=SA' -e 'PASSWORD=Str0ngPassw0rd123!' -p 5001:80 -d charlesmendes13/crud
 ```
 <sup>* Altere o "ip do container sqlserver" executando o comando docker inspect <id do container></sup>
 

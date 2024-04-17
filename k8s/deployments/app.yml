@@ -27,7 +27,7 @@ spec:
             - name: USER
               value: "SA"
             - name: PASSWORD
-              value: "Str0ngPa$$w0rd"
+              value: "Str0ngPassw0rd123!"
           ports:
             - containerPort: 80
           livenessProbe:

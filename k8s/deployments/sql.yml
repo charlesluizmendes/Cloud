@@ -20,8 +20,8 @@ spec:
           env:
             - name: ACCEPT_EULA
               value: "Y"
-            - name: SA_PASSWORD
-              value: "Str0ngPa$$w0rd"
+            - name: MSSQL_SA_PASSWORD
+              value: "Str0ngPassw0rd123!"
           ports:
             - containerPort: 1433
           volumeMounts:
