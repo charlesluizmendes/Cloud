@@ -28,3 +28,10 @@ spec:
 
 # kubectl get pods
 # kubectl exec -it <pod name> -- jmeter -n -t /jmeter/scripts/crud.jmx
+
+# kubectl exec -it <pod name> -- jmeter -n -t /jmeter/scripts/crud.jmx -l /jmeter/crud-results.csv -e -o /jmeter/results
+# kubectl cp default/<pod name>:/jmeter/results ./results
+
+# kubectl exec -it <pod name> -- rm -r /jmeter/results
+# kubectl exec -it <pod name> -- rm -r /jmeter/crud-results.csv
+# kubectl exec -it <pod name> -- rm -r /jmeter/jmeter.log
