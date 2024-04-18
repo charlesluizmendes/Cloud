@@ -1,0 +1,239 @@
+Iniciado pelo usuário admin
+Obtained jenkins/pipeline.jenkinsfile from git https://github.com/charlesmendes13/Cloud.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in C:\Users\Charles Mendes\.jenkins\workspace\crud
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git.exe rev-parse --resolve-git-dir C:\Users\Charles Mendes\.jenkins\workspace\crud\.git # timeout=10
+Fetching changes from the remote Git repository
+ > git.exe config remote.origin.url https://github.com/charlesmendes13/Cloud.git # timeout=10
+Fetching upstream changes from https://github.com/charlesmendes13/Cloud.git
+ > git.exe --version # timeout=10
+ > git --version # 'git version 2.38.0.windows.1'
+ > git.exe fetch --tags --force --progress -- https://github.com/charlesmendes13/Cloud.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+Checking out Revision 07b5930d27172e65fc25a38cb34d476035b76bee (refs/remotes/origin/master)
+ > git.exe config core.sparsecheckout # timeout=10
+ > git.exe checkout -f 07b5930d27172e65fc25a38cb34d476035b76bee # timeout=10
+Commit message: "Alterando Endereço do Git no Jenkinsfile"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Tool Install)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clear)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] deleteDir
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/charlesmendes13/Cloud.git
+ > git.exe init C:\Users\Charles Mendes\.jenkins\workspace\crud # timeout=10
+Fetching upstream changes from https://github.com/charlesmendes13/Cloud.git
+ > git.exe --version # timeout=10
+ > git --version # 'git version 2.38.0.windows.1'
+ > git.exe fetch --tags --force --progress -- https://github.com/charlesmendes13/Cloud.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git.exe config remote.origin.url https://github.com/charlesmendes13/Cloud.git # timeout=10
+ > git.exe config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+Checking out Revision 07b5930d27172e65fc25a38cb34d476035b76bee (refs/remotes/origin/master)
+ > git.exe config core.sparsecheckout # timeout=10
+ > git.exe checkout -f 07b5930d27172e65fc25a38cb34d476035b76bee # timeout=10
+ > git.exe branch -a -v --no-abbrev # timeout=10
+ > git.exe checkout -b master 07b5930d27172e65fc25a38cb34d476035b76bee # timeout=10
+Commit message: "Alterando Endereço do Git no Jenkinsfile"
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Restore)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] bat
+
+C:\Users\Charles Mendes\.jenkins\workspace\crud>dotnet restore ./Crud.sln 
+  Determinando os projetos a serem restaurados...
+  C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud\Crud.csproj restaurado (em 5,4 sec).
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] bat
+
+C:\Users\Charles Mendes\.jenkins\workspace\crud>dotnet build ./Crud.sln --configuration Release 
+Microsoft(R) Build Engine versÆo 17.0.1+b177f8fa7 para .NET 
+Copyright (C) Microsoft Corporation. Todos os direitos reservados.
+
+  Determinando os projetos a serem restaurados...
+  Todos os projetos estÆo atualizados para restaura‡Æo.
+C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud\Models\ErrorViewModel.cs(5,22): warning CS8632: A anota‡Æo para tipos de referˆncia anul veis deve ser usada apenas em c¢digo em um contexto de anota‡äes '#nullable'. [C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud\Crud.csproj]
+  Crud -> C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud\bin\Release\net6.0\Crud.dll
+
+Compila‡Æo com ˆxito.
+
+C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud\Models\ErrorViewModel.cs(5,22): warning CS8632: A anota‡Æo para tipos de referˆncia anul veis deve ser usada apenas em c¢digo em um contexto de anota‡äes '#nullable'. [C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud\Crud.csproj]
+    1 Aviso(s)
+    0 Erro(s)
+
+Tempo Decorrido 00:00:14.33
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Docker Build)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] script
+[Pipeline] {
+[Pipeline] powershell
+[Pipeline] dir
+Running in C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud
+[Pipeline] {
+[Pipeline] bat
+
+C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud>docker build -t charlesmendes13/crud:1.0.0.0 -f Dockerfile . 
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 828B 0.0s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for mcr.microsoft.com/dotnet/aspnet:6.0
+#2 DONE 0.0s
+
+#3 [internal] load metadata for mcr.microsoft.com/dotnet/sdk:6.0
+#3 DONE 1.7s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [build 1/7] FROM mcr.microsoft.com/dotnet/sdk:6.0@sha256:3bfaf0ce4417fb6c63d9a6ac1ddde8af9684c35a2b409815dd7ce15efe3d984b
+#5 DONE 0.0s
+
+#6 [base 1/2] FROM mcr.microsoft.com/dotnet/aspnet:6.0
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 66.16MB 5.0s
+#7 transferring context: 90.30MB 5.8s done
+#7 DONE 5.8s
+
+#8 [build 2/7] WORKDIR /src
+#8 CACHED
+
+#9 [build 3/7] COPY [Crud.csproj, Crud/]
+#9 CACHED
+
+#10 [build 4/7] RUN dotnet restore "Crud/Crud.csproj"
+#10 CACHED
+
+#11 [build 5/7] WORKDIR /src/Crud
+#11 CACHED
+
+#12 [build 6/7] COPY . .
+#12 DONE 9.8s
+
+#13 [build 7/7] RUN dotnet build "Crud.csproj" -c Release -o /app/build
+#13 5.479 MSBuild version 17.3.2+561848881 for .NET
+#13 7.251   Determining projects to restore...
+#13 9.636   Restored /src/Crud/Crud.csproj (in 1.41 sec).
+#13 22.51 /src/Crud/Models/ErrorViewModel.cs(5,22): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [/src/Crud/Crud.csproj]
+#13 25.91   Crud -> /app/build/Crud.dll
+#13 25.95 
+#13 25.95 Build succeeded.
+#13 25.95 
+#13 25.95 /src/Crud/Models/ErrorViewModel.cs(5,22): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [/src/Crud/Crud.csproj]
+#13 25.95     1 Warning(s)
+#13 25.95     0 Error(s)
+#13 25.95 
+#13 25.95 Time Elapsed 00:00:20.22
+#13 DONE 26.3s
+
+#14 [publish 1/1] RUN dotnet publish "Crud.csproj" -c Release -o /app/publish /p:UseAppHost=false
+#14 0.763 MSBuild version 17.3.2+561848881 for .NET
+#14 1.244   Determining projects to restore...
+#14 1.566   All projects are up-to-date for restore.
+#14 3.009   Crud -> /src/Crud/bin/Release/net6.0/Crud.dll
+#14 10.03   Crud -> /app/publish/
+#14 DONE 12.1s
+
+#15 [base 2/2] WORKDIR /app
+#15 CACHED
+
+#16 [final 1/2] WORKDIR /app
+#16 CACHED
+
+#17 [final 2/2] COPY --from=publish /app/publish .
+#17 DONE 0.9s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 0.2s done
+#18 writing image sha256:ad374308ac55beb7a1100d15ceb3f78f684752a708992d1843f58c84d2ef8f75 done
+#18 naming to docker.io/charlesmendes13/crud:1.0.0.0 0.0s done
+#18 DONE 0.2s
+
+View build details: docker-desktop://dashboard/build/default/default/c5t1tcpgpqhdt71nkvaz9iaqk
+
+What's Next?
+  View a summary of image vulnerabilities and recommendations â†’ docker scout quickview
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
