@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Checkout') {
             steps {                
-                git 'https://github.com/charlesmendes13/Kubernetes.git'
+                git 'https://github.com/charlesmendes13/Cloud.git'
             }
         }
         stage('Restore') {
