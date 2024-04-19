@@ -18,13 +18,18 @@ Fetching upstream changes from https://github.com/charlesmendes13/Cloud.git
  > git --version # 'git version 2.38.0.windows.1'
  > git.exe fetch --tags --force --progress -- https://github.com/charlesmendes13/Cloud.git +refs/heads/*:refs/remotes/origin/* # timeout=10
  > git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
-Checking out Revision 07b5930d27172e65fc25a38cb34d476035b76bee (refs/remotes/origin/master)
+Checking out Revision 6b745b9e24c336665bb3f384e8ad0d430240b146 (refs/remotes/origin/master)
  > git.exe config core.sparsecheckout # timeout=10
- > git.exe checkout -f 07b5930d27172e65fc25a38cb34d476035b76bee # timeout=10
-Commit message: "Alterando Endereço do Git no Jenkinsfile"
+ > git.exe checkout -f 6b745b9e24c336665bb3f384e8ad0d430240b146 # timeout=10
+Commit message: "Alterando Pipeline para publicar no Dockerhub"
 First time build. Skipping changelog.
 [Pipeline] }
 [Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of %DOCKERHUB% or %DOCKERHUB_PSW%
+[Pipeline] {
 [Pipeline] withEnv
 [Pipeline] {
 [Pipeline] stage
@@ -67,12 +72,12 @@ Fetching upstream changes from https://github.com/charlesmendes13/Cloud.git
  > git.exe config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
 Avoid second fetch
  > git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
-Checking out Revision 07b5930d27172e65fc25a38cb34d476035b76bee (refs/remotes/origin/master)
+Checking out Revision 6b745b9e24c336665bb3f384e8ad0d430240b146 (refs/remotes/origin/master)
  > git.exe config core.sparsecheckout # timeout=10
- > git.exe checkout -f 07b5930d27172e65fc25a38cb34d476035b76bee # timeout=10
+ > git.exe checkout -f 6b745b9e24c336665bb3f384e8ad0d430240b146 # timeout=10
  > git.exe branch -a -v --no-abbrev # timeout=10
- > git.exe checkout -b master 07b5930d27172e65fc25a38cb34d476035b76bee # timeout=10
-Commit message: "Alterando Endereço do Git no Jenkinsfile"
+ > git.exe checkout -b master 6b745b9e24c336665bb3f384e8ad0d430240b146 # timeout=10
+Commit message: "Alterando Pipeline para publicar no Dockerhub"
 [Pipeline] }
 [Pipeline] // withEnv
 [Pipeline] }
@@ -87,7 +92,7 @@ Commit message: "Alterando Endereço do Git no Jenkinsfile"
 
 C:\Users\Charles Mendes\.jenkins\workspace\crud>dotnet restore ./Crud.sln 
   Determinando os projetos a serem restaurados...
-  C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud\Crud.csproj restaurado (em 5,4 sec).
+  C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud\Crud.csproj restaurado (em 584 ms).
 [Pipeline] }
 [Pipeline] // withEnv
 [Pipeline] }
@@ -115,7 +120,7 @@ C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud\Models\ErrorViewModel.c
     1 Aviso(s)
     0 Erro(s)
 
-Tempo Decorrido 00:00:14.33
+Tempo Decorrido 00:00:04.75
 [Pipeline] }
 [Pipeline] // withEnv
 [Pipeline] }
@@ -129,6 +134,8 @@ Tempo Decorrido 00:00:14.33
 [Pipeline] script
 [Pipeline] {
 [Pipeline] powershell
+[Pipeline] }
+[Pipeline] // script
 [Pipeline] dir
 Running in C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud
 [Pipeline] {
@@ -138,14 +145,14 @@ C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud>docker build -t charles
 #0 building with "default" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 828B 0.0s done
-#1 DONE 0.1s
+#1 transferring dockerfile: 828B done
+#1 DONE 0.0s
 
 #2 [internal] load metadata for mcr.microsoft.com/dotnet/aspnet:6.0
 #2 DONE 0.0s
 
 #3 [internal] load metadata for mcr.microsoft.com/dotnet/sdk:6.0
-#3 DONE 1.7s
+#3 DONE 0.6s
 
 #4 [internal] load .dockerignore
 #4 transferring context: 2B done
@@ -158,79 +165,135 @@ C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud>docker build -t charles
 #6 DONE 0.0s
 
 #7 [internal] load build context
-#7 transferring context: 66.16MB 5.0s
-#7 transferring context: 90.30MB 5.8s done
-#7 DONE 5.8s
+#7 transferring context: 10.15MB 0.4s done
+#7 DONE 0.4s
 
-#8 [build 2/7] WORKDIR /src
+#8 [publish 1/1] RUN dotnet publish "Crud.csproj" -c Release -o /app/publish /p:UseAppHost=false
 #8 CACHED
 
-#9 [build 3/7] COPY [Crud.csproj, Crud/]
+#9 [base 2/2] WORKDIR /app
 #9 CACHED
 
-#10 [build 4/7] RUN dotnet restore "Crud/Crud.csproj"
+#10 [final 1/2] WORKDIR /app
 #10 CACHED
 
-#11 [build 5/7] WORKDIR /src/Crud
+#11 [build 7/7] RUN dotnet build "Crud.csproj" -c Release -o /app/build
 #11 CACHED
 
-#12 [build 6/7] COPY . .
-#12 DONE 9.8s
+#12 [build 2/7] WORKDIR /src
+#12 CACHED
 
-#13 [build 7/7] RUN dotnet build "Crud.csproj" -c Release -o /app/build
-#13 5.479 MSBuild version 17.3.2+561848881 for .NET
-#13 7.251   Determining projects to restore...
-#13 9.636   Restored /src/Crud/Crud.csproj (in 1.41 sec).
-#13 22.51 /src/Crud/Models/ErrorViewModel.cs(5,22): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [/src/Crud/Crud.csproj]
-#13 25.91   Crud -> /app/build/Crud.dll
-#13 25.95 
-#13 25.95 Build succeeded.
-#13 25.95 
-#13 25.95 /src/Crud/Models/ErrorViewModel.cs(5,22): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [/src/Crud/Crud.csproj]
-#13 25.95     1 Warning(s)
-#13 25.95     0 Error(s)
-#13 25.95 
-#13 25.95 Time Elapsed 00:00:20.22
-#13 DONE 26.3s
+#13 [build 3/7] COPY [Crud.csproj, Crud/]
+#13 CACHED
 
-#14 [publish 1/1] RUN dotnet publish "Crud.csproj" -c Release -o /app/publish /p:UseAppHost=false
-#14 0.763 MSBuild version 17.3.2+561848881 for .NET
-#14 1.244   Determining projects to restore...
-#14 1.566   All projects are up-to-date for restore.
-#14 3.009   Crud -> /src/Crud/bin/Release/net6.0/Crud.dll
-#14 10.03   Crud -> /app/publish/
-#14 DONE 12.1s
+#14 [build 4/7] RUN dotnet restore "Crud/Crud.csproj"
+#14 CACHED
 
-#15 [base 2/2] WORKDIR /app
+#15 [build 5/7] WORKDIR /src/Crud
 #15 CACHED
 
-#16 [final 1/2] WORKDIR /app
+#16 [build 6/7] COPY . .
 #16 CACHED
 
 #17 [final 2/2] COPY --from=publish /app/publish .
-#17 DONE 0.9s
+#17 CACHED
 
 #18 exporting to image
-#18 exporting layers
-#18 exporting layers 0.2s done
-#18 writing image sha256:ad374308ac55beb7a1100d15ceb3f78f684752a708992d1843f58c84d2ef8f75 done
-#18 naming to docker.io/charlesmendes13/crud:1.0.0.0 0.0s done
-#18 DONE 0.2s
+#18 exporting layers done
+#18 writing image sha256:673df872249ac02187376f2d2e9b48555791f59b97c355df9fbe03c5cb351502 done
+#18 naming to docker.io/charlesmendes13/crud:1.0.0.0 done
+#18 DONE 0.0s
 
-View build details: docker-desktop://dashboard/build/default/default/c5t1tcpgpqhdt71nkvaz9iaqk
+View build details: docker-desktop://dashboard/build/default/default/jcxm18u0y8q3b3znx4ai3xs4e
 
 What's Next?
   View a summary of image vulnerabilities and recommendations â†’ docker scout quickview
+[Pipeline] bat
+
+C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud>docker tag charlesmendes13/crud:1.0.0.0 charlesmendes13/crud:latest 
 [Pipeline] }
 [Pipeline] // dir
 [Pipeline] }
-[Pipeline] // script
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Docker Push)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] dir
+Running in C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud
+[Pipeline] {
+[Pipeline] bat
+Warning: A secret was passed to "bat" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [DOCKERHUB_PSW]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
+
+C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud>docker login --username=charlesluizmendes@gmail.com --password=**** 
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+Login Succeeded
+[Pipeline] bat
+
+C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud>docker push charlesmendes13/crud:1.0.0.0 
+The push refers to repository [docker.io/charlesmendes13/crud]
+7e90bd590ca2: Preparing
+5f70bf18a086: Preparing
+a88c67e146dd: Preparing
+a8e3dd1197ea: Preparing
+862140d15c26: Preparing
+fc6cf001abf4: Preparing
+71f95cd50b34: Preparing
+420179ad2efa: Preparing
+fc6cf001abf4: Waiting
+71f95cd50b34: Waiting
+420179ad2efa: Waiting
+7e90bd590ca2: Layer already exists
+5f70bf18a086: Layer already exists
+a8e3dd1197ea: Layer already exists
+862140d15c26: Layer already exists
+a88c67e146dd: Layer already exists
+420179ad2efa: Layer already exists
+71f95cd50b34: Layer already exists
+fc6cf001abf4: Layer already exists
+1.0.0.0: digest: sha256:00ec6b5c22bdb478bc56e4e6f116e9db1498bdd724338c9147af890ff34e1c63 size: 1995
+[Pipeline] bat
+
+C:\Users\Charles Mendes\.jenkins\workspace\crud\src\Crud>docker push charlesmendes13/crud:latest 
+The push refers to repository [docker.io/charlesmendes13/crud]
+7e90bd590ca2: Preparing
+5f70bf18a086: Preparing
+a88c67e146dd: Preparing
+a8e3dd1197ea: Preparing
+862140d15c26: Preparing
+fc6cf001abf4: Preparing
+71f95cd50b34: Preparing
+420179ad2efa: Preparing
+fc6cf001abf4: Waiting
+71f95cd50b34: Waiting
+420179ad2efa: Waiting
+a8e3dd1197ea: Layer already exists
+7e90bd590ca2: Layer already exists
+a88c67e146dd: Layer already exists
+862140d15c26: Layer already exists
+5f70bf18a086: Layer already exists
+71f95cd50b34: Layer already exists
+420179ad2efa: Layer already exists
+fc6cf001abf4: Layer already exists
+latest: digest: sha256:00ec6b5c22bdb478bc56e4e6f116e9db1498bdd724338c9147af890ff34e1c63 size: 1995
+[Pipeline] }
+[Pipeline] // dir
 [Pipeline] }
 [Pipeline] // withEnv
 [Pipeline] }
 [Pipeline] // stage
 [Pipeline] }
 [Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
 [Pipeline] }
 [Pipeline] // withEnv
 [Pipeline] }
