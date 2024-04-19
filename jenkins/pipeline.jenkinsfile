@@ -3,6 +3,10 @@ pipeline {
     tools {
         dotnetsdk 'dotnet'
     }
+    environment {
+        VERSION = ''
+        DOCKERHUB = credentials("dockerhub")
+    }
     stages {
         stage('Clear') {
             steps {
@@ -28,10 +32,20 @@ pipeline {
             steps {
                 script {
                     def path = "${env.WORKSPACE}\\src\\Crud\\bin\\Release\\net6.0\\Crud.dll"
-                    def version = powershell(returnStdout: true, script: "([System.Diagnostics.FileVersionInfo]::GetVersionInfo(\"${path}\")).FileVersion").trim()
-                    dir('src/Crud') {
-                        bat "docker build -t charlesmendes13/crud:$version -f Dockerfile ."
-                    }
+                    VERSION = powershell(returnStdout: true, script: "([System.Diagnostics.FileVersionInfo]::GetVersionInfo(\"${path}\")).FileVersion").trim()                                        
+                } 
+                dir('src/Crud') {                    
+                    bat "docker build -t charlesmendes13/crud:$VERSION -f Dockerfile ."
+                    bat "docker tag charlesmendes13/crud:$VERSION charlesmendes13/crud:latest"
+                }               
+            }
+        }
+        stage('Docker Push') {
+            steps {                
+                dir('src/Crud') {    
+                    bat "docker login --username=$DOCKERHUB_USR --password=$DOCKERHUB_PSW"                                    
+                    bat "docker push charlesmendes13/crud:$VERSION"
+                    bat "docker push charlesmendes13/crud:latest"
                 }
             }
         }
